@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
+import "./InputField.css";
 
 const InputField = ({ text, setText }) => {
   const handleChange = (event) => {
@@ -8,7 +9,13 @@ const InputField = ({ text, setText }) => {
   };
 
   return (
-    <input name="inputField" type="text" value={text} onChange={handleChange} />
+    <input
+      name="inputField"
+      type="text"
+      value={text}
+      onChange={handleChange}
+      className="input-block__input-field"
+    />
   );
 };
 
