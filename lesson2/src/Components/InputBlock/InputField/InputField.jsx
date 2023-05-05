@@ -12,6 +12,7 @@ const InputField = ({ text, setText }) => {
     <input
       name="inputField"
       type="text"
+      autoComplete="off"
       value={text}
       onChange={handleChange}
       className="input-block__input-field"
