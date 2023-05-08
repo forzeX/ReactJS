@@ -1,0 +1,10 @@
+.message-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #e2e2e2;
+  padding: 20px;
+  overflow-y: scroll;
+  grid-area: message-list;
+  height: 100%;
+}
