@@ -12,25 +12,30 @@ const config = {
   entry: "./src/index.jsx",
   output: {
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   devServer: {
     open: true,
     host: "localhost",
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
-
     new MiniCssExtractPlugin(),
-
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
+  devtool: "eval-source-map",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/i,
+        resolve: {
+          extensions: [".js", ".jsx"],
+        },
         loader: "babel-loader",
       },
       {
@@ -41,9 +46,6 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
 };
