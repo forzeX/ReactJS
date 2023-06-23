@@ -1,33 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./styles.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { Provider } from "react-redux";
+import store from "./Store/store";
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
-const App = (props) => {
-  let messages = ["Привет", "Как дела?"];
-
-  const [initialMessages, updateMessages] = useState(messages);
-
-  const MessageComponent = (props) => <div>{props.text}</div>;
-
-  const MessageField = (props) => {
-    return props.messages.map((message) => <MessageComponent text={message} />);
-  };
-
-  const SendButton = (props) => {
-    const sendMessage = () => {
-      updateMessages([...initialMessages, "Нормально!"]);
-    };
-    return <button onClick={sendMessage}>Отправить</button>;
-  };
-
-  return (
-    <div>
-      <MessageField messages={initialMessages} />
-      <SendButton messages={initialMessages} />
-    </div>
-  );
-};
-
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
