@@ -3,8 +3,12 @@ import ReactDOM from "react-dom/client";
 import SendIcon from "@mui/icons-material/Send";
 import HeaderNavigation from "./HeaderNavigation/HeaderNavigation";
 import "./Header.css";
+import { useSelector } from "react-redux";
 
-const Header = ({ title }) => {
+const Header = () => {
+  const profileLogin = useSelector((store) => store.profileData.login);
+  // const userName = store.profileName;
+
   return (
     <div className="header">
       <h1>
@@ -12,7 +16,7 @@ const Header = ({ title }) => {
         Messenger
       </h1>
       <HeaderNavigation></HeaderNavigation>
-      <div className="header__chat-title">{title}</div>
+      <div className="header__user-name">{profileLogin}</div>
     </div>
   );
 };

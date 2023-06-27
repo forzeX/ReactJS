@@ -10,34 +10,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_MESSAGE, addMessage } from "../../Store/actions";
 
 const Layout = () => {
-  const store = useSelector((state) => state);
-  // const [messages, updateMessages] = useState(initialMessages);
+  const store = useSelector((state) => state.chatsStorage);
   const [messages, updateMessages] = useState(store);
 
   let { chatId } = useParams();
   const dispatch = useDispatch();
 
-  // const handleAddMessage = useCallback(
-  //   (message) => {
-  //     updateMessages((messages) => ({
-  //       ...messages,
-  //       [chatId]: {
-  //         title: messages[chatId].title,
-  //         storage: [...messages[chatId].storage, message],
-  //       },
-  //     }));
-  //   },
-  //   [chatId]
-  // );
-
   const handleAddMessage = (message) => {
     dispatch(addMessage(message.text, message.author, chatId));
   };
 
-  // Проверка доступности хранилища сообщений в чате {chatId}
-  console.log(messages[chatId].storage);
-
   // (ТРЕБУЕТ ДОРАБОТКИ) Добавляем автоматический ответ от бота при отправке сообщения человеком
+
   // useEffect(() => {
   //   if (
   //     // Используем опциональную цепочку для проверки наличия chatId
@@ -45,48 +29,29 @@ const Layout = () => {
   //     messages[chatId].storage[messages[chatId].storage.length - 1].author !==
   //       AUTHORS.BOT
   //   ) {
+  //     console.log(messages);
   //     handleAddMessage({
   //       author: AUTHORS.BOT,
   //       text: "Не приставай ко мне. Я - робот!",
   //     });
   //   }
-  // }, [messages[chatId].storage]);
+  // }, [messages[chatId]?.storage]);
 
-  // Не потребуется. Оставлено для образца
-  // const handleAddChat = useCallback(() => {
-  //   const newChatId = Object.keys(messages).length + 1;
-  //   updateMessages((messages) => ({
-  //     ...messages,
-  //     [newChatId]: {
-  //       title: `Чат ${newChatId}`,
-  //       storage: [],
-  //     },
-  //   }));
-  // }, [messages]);
+  // const title = store[chatId]?.title;
 
-  // Не потребуется. Оставлено для образца
-  // const title = messages[chatId]?.title;
-  const title = store[chatId]?.title;
-
-  // Не потребуется. Оставлено для образца
   // const contextValue = {
-  //   messages: messages[chatId]?.storage,
+  //   messages: store[chatId]?.storage,
   //   onAddMessage: handleAddMessage,
   // };
-
-  const contextValue = {
-    messages: store[chatId]?.storage,
-    onAddMessage: handleAddMessage,
-  };
 
   // const chats = Object.entries(messages);
   // const chats = Object.entries(store);
 
   return (
     <div className="layout">
-      <Header title={title} />
+      <Header />
       <ChatList />
-      <Outlet context={contextValue} />
+      <Outlet />
     </div>
   );
 };
