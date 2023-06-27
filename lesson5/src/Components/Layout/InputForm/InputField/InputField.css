@@ -1,0 +1,7 @@
+.input-block__input-field
+  .css-l4u8b9-MuiInputBase-root-MuiInput-root:hover:not(
+    .Mui-disabled,
+    .Mui-error
+  ):before {
+  border-bottom-width: 1px !important;
+}
