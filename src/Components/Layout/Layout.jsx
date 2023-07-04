@@ -10,15 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_MESSAGE, addMessage } from "../../Store/actions";
 
 const Layout = () => {
-  const store = useSelector((state) => state.chatsStorage);
-  const [messages, updateMessages] = useState(store);
+  // const store = useSelector((state) => state.chatsStorage);
+  // const [messages, updateMessages] = useState(store);
 
-  let { chatId } = useParams();
-  const dispatch = useDispatch();
+  // let { chatId } = useParams();
+  // const dispatch = useDispatch();
 
-  const handleAddMessage = (message) => {
-    dispatch(addMessage(message.text, message.author, chatId));
-  };
+  // const handleAddMessage = (message) => {
+  //   dispatch(addMessage(message.text, message.author, chatId));
+  // };
 
   // (ТРЕБУЕТ ДОРАБОТКИ) Добавляем автоматический ответ от бота при отправке сообщения человеком
 
@@ -37,19 +37,8 @@ const Layout = () => {
   //   }
   // }, [messages[chatId]?.storage]);
 
-  // const title = store[chatId]?.title;
-
-  // const contextValue = {
-  //   messages: store[chatId]?.storage,
-  //   onAddMessage: handleAddMessage,
-  // };
-
-  // const chats = Object.entries(messages);
-  // const chats = Object.entries(store);
-
   return (
     <div className="layout">
-      <Header />
       <ChatList />
       <Outlet />
     </div>

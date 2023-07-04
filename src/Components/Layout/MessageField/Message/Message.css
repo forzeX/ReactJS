@@ -1,13 +1,27 @@
 .message {
-  padding: 5px 15px;
+  padding: 5px 10px;
   border-radius: 20px;
   font-size: 18px;
   margin: 5px;
+  display: grid;
+  grid-template-areas:
+    "text text text"
+    "author author controls";
+  grid-template-columns: max-content max-content min-content;
+}
+
+.message-text {
+  grid-area: text;
 }
 
 .message-sender {
+  grid-area: author;
   color: darkgray;
   font-size: 14px;
+  min-height: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .bot-message {
@@ -18,4 +32,8 @@
 .human-message {
   align-self: flex-end;
   background-color: #bbdefb;
+}
+
+.controls {
+  grid-area: controls;
 }
