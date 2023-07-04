@@ -12,6 +12,7 @@ const config = {
   entry: "./src/index.jsx",
   output: {
     path: path.resolve(__dirname, "dist"),
+    //
     publicPath: "/",
   },
   devServer: {
