@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import Message from "./MessageField/Message/Message";
-import MessageField from "./MessageField/MessageField";
+import MessageField from "./Components/MessageField/MessageField";
+import InputBlock from "./Components/InputBlock/InputBlock";
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
@@ -32,18 +32,10 @@ const App = (props) => {
     }
   }, [messages]);
 
-  const SendButton = (props) => {
-    const handleClick = () => {
-      updateMessages([...messages, { text: "Нормально!", author: "Я" }]);
-    };
-
-    return <button onClick={handleClick}>Отправить</button>;
-  };
-
   return (
     <>
-      <MessageField messages={messages} />
-      <SendButton messages={messages} />
+      <MessageField messages={messages} updateMessages={updateMessages} />
+      <InputBlock messages={messages} updateMessages={updateMessages} />
     </>
   );
 };

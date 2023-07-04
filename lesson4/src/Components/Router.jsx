@@ -34,3 +34,5 @@ const Router = createBrowserRouter([
 ]);
 
 export default Router;
+
+This is text to be wrapped
