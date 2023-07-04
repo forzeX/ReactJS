@@ -7,13 +7,16 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Provider } from "react-redux";
-import store from "./Store/store";
+import { persistor, store } from "./Store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate persistor={persistor} loading={null}>
+      <App />
+    </PersistGate>
   </Provider>
 );

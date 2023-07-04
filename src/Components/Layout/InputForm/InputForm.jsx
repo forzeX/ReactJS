@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SendButton from "./SendButton/SendButton";
 import InputField from "./InputField/InputField";
 import { AUTHORS } from "../../../Utils/Constants";
 import "./InputForm.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../../../Store/actions";
+import { useDispatch } from "react-redux";
+import { addMessageWithThunk } from "../../../Store/messages/actions";
 
 const InputBlock = () => {
-  // const { onAddMessage } = useOutletContext();
   const { chatId } = useParams();
-  const state = useSelector((state) => state);
+
   const dispatch = useDispatch();
 
-  const handleAddMessage = (message) => {
-    dispatch(addMessage(message.text, message.author, chatId));
-  };
+  const handleAddMessage = useCallback(
+    (message) => {
+      dispatch(addMessageWithThunk(message, chatId));
+    },
+    [chatId, dispatch]
+  );
 
   const [text, setText] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddMessage({ text: text, author: AUTHORS.HUMAN });
+    handleAddMessage({
+      text: text,
+      author: AUTHORS.HUMAN,
+      id: Date.now().toString(),
+    });
     setText("");
   };
 

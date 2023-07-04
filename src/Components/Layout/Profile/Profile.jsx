@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { sendProfileName } from "../../../Store/actions";
+// import { sendProfileName } from "../../../Store/actions";
+import { changeProfile } from "../../../Store/profile/actions";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PersonIcon from "@mui/icons-material/Person";
@@ -18,8 +19,7 @@ import Stack from "@mui/material/Stack";
 const Profile = () => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
-
-  const profileData = useSelector((state) => state.profileData);
+  const profileData = useSelector((state) => state.profile.profileData);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -27,16 +27,15 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(sendProfileName(value));
+    // dispatch(sendProfileName(value));
+    dispatch(changeProfile(value));
     setValue("");
   };
 
   return (
     <>
-      <Header></Header>
       <div className="profile">
         <Box
-          // spacing={2}
           display="flex"
           flexDirection="column"
           alignItems="center"
