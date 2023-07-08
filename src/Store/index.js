@@ -28,11 +28,13 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import { articlesReducer } from "./articles/reducer";
 
 const rootReducer = combineReducers({
   chats: chatReducer,
   messages: messagesReducer,
   profile: profileReducer,
+  articles: articlesReducer,
 });
 
 const middlewareEnhancer = applyMiddleware(logger, thunk, newMessageIndicator);

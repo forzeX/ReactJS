@@ -16,7 +16,7 @@ const Header = () => {
           <SendIcon variant="outlined" sx={{ mr: 1 }} />
           Messenger
         </h1>
-        <HeaderNavigation></HeaderNavigation>
+        <HeaderNavigation />
         <div className="header__user-name">{profileLogin}</div>
       </div>
       <Outlet />
