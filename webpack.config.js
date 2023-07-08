@@ -16,11 +16,25 @@ const config = {
     publicPath: "/",
   },
   devServer: {
-    open: true,
+    open: false,
     host: "localhost",
     historyApiFallback: true,
     static: {
       directory: path.join(__dirname, "dist"),
+    },
+    allowedHosts: ["all"], // Выдача доступа стороннему API-сервису
+    client: {
+      logging: "verbose",
+      overlay: true,
+      progress: true,
+    },
+    onListening: function (devServer) {
+      if (!devServer) {
+        throw new Error("webpack-dev-server is not defined");
+      }
+
+      const port = devServer.server.address().port;
+      console.log("Listening on port:", port);
     },
   },
   plugins: [

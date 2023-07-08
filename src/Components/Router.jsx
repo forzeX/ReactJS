@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import Profile from "./Layout/Profile/Profile";
+// В учебных целях
+import Articles from "./Articles/Articles";
 import MessageField from "./Layout/MessageField/MessageField";
 import InputForm from "./Layout/InputForm/InputForm";
 import ErrorPage from "./ErrorPage/ErrorPage";
@@ -37,6 +39,7 @@ const Router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      { path: "articles", element: <Articles /> },
       {
         path: "*",
         // element: <div>Ошибка 404. Такой страницы не существует</div>,
