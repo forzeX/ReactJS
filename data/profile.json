@@ -1,0 +1,13 @@
+{
+  "profileData": {
+    "login": "User1",
+    "name": "Артем",
+    "lastName": "Горбачев",
+    "phone": "+7123456789",
+    "birthDate": "23.12.1990"
+  },
+  "requestStatus": {
+    "status": "REQUEST_STATUS.IDLE",
+    "error": ""
+  }
+}
