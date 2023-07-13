@@ -9,7 +9,6 @@ export const profileDataRequest = () => ({
 });
 
 export const profileDataSuccess = (data) => {
-  console.log(data);
   return {
     type: DATA_SUCCESS,
     data,
@@ -22,22 +21,18 @@ export const profileDataError = (error) => ({
 
 export const getProfileData = (dispatch) => {
   dispatch(profileDataRequest());
-  fetch(
-    API_URL
-    //   {
-    //   url: API_URL,
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   mode: "cors",
-    // }
-  )
+  fetch(API_URL.PROFILE, {
+    // fetch("http://localhost:3000/profile", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
     .then((response) => {
-      // if (!response.ok) {
-      //   // Свойство "ok" полученного объекта response становится true, если HTTP-статус находится в диапазоне 200-299
-      //   throw new Error(`Ошибка ` + response.status);
-      // }
+      if (!response.ok) {
+        // Свойство "ok" полученного объекта response становится true, если HTTP-статус находится в диапазоне 200-299
+        throw new Error(`Ошибка ` + response.status);
+      }
       return response.json();
     })
     .then((data) => {
@@ -50,14 +45,32 @@ export const getProfileData = (dispatch) => {
     });
 };
 
+export const changeProfileData = (dispatch, data) => {
+  dispatch(profileDataRequest());
+  fetch(API_URL.PROFILE, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        // Свойство "ok" полученного объекта response становится true, если HTTP-статус находится в диапазоне 200-299
+        throw new Error(`Ошибка ` + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      dispatch(profileDataSuccess(data));
+    })
+    .catch((error) => {
+      dispatch(profileDataError(error.message));
+      console.log(error);
+    });
+};
+
 // export const changeName = (name) => ({
 //   type: CHANGE_NAME,
 //   payload: name,
-// });
-
-// export const changeLogin = (login) => ({
-//   type: CHANGE_LOGIN,
-//   payload: login,
 // });
 
 // export const changeLastName = (lastName) => ({

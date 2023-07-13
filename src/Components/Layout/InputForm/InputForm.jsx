@@ -6,7 +6,7 @@ import InputField from "./InputField/InputField";
 import { AUTHORS } from "../../../Utils/Constants";
 import "./InputForm.css";
 import { useDispatch } from "react-redux";
-import { addMessageWithThunk } from "../../../Store/messages/actions";
+import { addMessage } from "../../../Store/messages/actions";
 
 const InputBlock = () => {
   const { chatId } = useParams();
@@ -15,7 +15,7 @@ const InputBlock = () => {
 
   const handleAddMessage = useCallback(
     (message) => {
-      dispatch(addMessageWithThunk(message, chatId));
+      dispatch(addMessage(message, chatId));
     },
     [chatId, dispatch]
   );
@@ -25,8 +25,8 @@ const InputBlock = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     handleAddMessage({
-      text: text,
       author: AUTHORS.HUMAN,
+      text: text,
       id: Date.now().toString(),
     });
     setText("");

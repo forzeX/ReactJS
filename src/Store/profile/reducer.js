@@ -3,11 +3,11 @@ import { DATA_ERROR, DATA_REQUEST, DATA_SUCCESS } from "./actions";
 
 const initialState = {
   profileData: {
-    login: "User1",
-    name: "Артем",
-    lastName: "Горбачев",
-    phone: "+7123456789",
-    birthDate: "23.12.1990",
+    login: "",
+    name: "",
+    lastName: "",
+    phone: "",
+    birthDate: "",
   },
   requestStatus: {
     status: REQUEST_STATUS.IDLE,

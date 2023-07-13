@@ -1,8 +1,10 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -28,6 +30,7 @@ const config = {
       template: "index.html",
     }),
     new MiniCssExtractPlugin(),
+    new NodePolyfillPlugin(),
   ],
   devtool: "eval-source-map",
   module: {

@@ -1,19 +1,21 @@
+import { REQUEST_STATUS } from "../../Utils/Constants";
 import { ADD_MESSAGE } from "../messages/actions";
 import {
-  ADD_CHAT,
-  CLEAR_NEW_MESSAGES_LOG,
+  CLEAR_BLINK_LOG,
+  DATA_ERROR,
+  DATA_REQUEST,
+  DATA_SUCCESS,
   DELETE_CHAT,
   SHOW_ADD_CHAT_BAR,
+  SUPPLY_BLINK_LOG,
 } from "./actions";
 
 const initialState = {
-  chatList: [
-    { name: "Чат 1", id: "9efd8d44-18a2-11ee-be56-0242ac120002" },
-    { name: "Чат 2", id: "9efd9082-18a2-11ee-be56-0242ac120002" },
-    { name: "Чат 3", id: "9efd9208-18a2-11ee-be56-0242ac120002" },
-    { name: "Чат 4", id: "9efd9370-18a2-11ee-be56-0242ac120002" },
-    { name: "Чат 5", id: "9efd9c12-18a2-11ee-be56-0242ac120002" },
-  ],
+  chatList: [],
+  requestStatus: {
+    status: REQUEST_STATUS.IDLE,
+    error: "",
+  },
   showModal: false,
   haveNewMessages: [],
 };
@@ -24,10 +26,34 @@ const shortenedChatList = (chatList, chatId) => {
 
 export const chatReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CHAT: {
+    case DATA_REQUEST: {
       return {
         ...state,
-        chatList: [...state.chatList, action.payload],
+        requestStatus: {
+          status: REQUEST_STATUS.PENDING,
+          error: "",
+        },
+      };
+    }
+    case DATA_SUCCESS: {
+      console.log(action.data.chatList);
+      return {
+        ...state,
+        chatList: [...action.data.chatList],
+        requestStatus: {
+          status: REQUEST_STATUS.SUCCESS,
+          error: "",
+        },
+      };
+    }
+    case DATA_ERROR: {
+      console.log(action.data);
+      return {
+        ...state,
+        requestStatus: {
+          status: REQUEST_STATUS.FAILURE,
+          error: action.error,
+        },
       };
     }
     case SHOW_ADD_CHAT_BAR: {
@@ -36,22 +62,16 @@ export const chatReducer = (state = initialState, action) => {
         showModal: !state.showModal,
       };
     }
-    case ADD_MESSAGE: {
+    case SUPPLY_BLINK_LOG: {
       return {
         ...state,
-        haveNewMessages: [...state.haveNewMessages, action.payload.chatId],
+        haveNewMessages: [...state.haveNewMessages, action.payload],
       };
     }
-    case CLEAR_NEW_MESSAGES_LOG: {
+    case CLEAR_BLINK_LOG: {
       return {
         ...state,
         haveNewMessages: [],
-      };
-    }
-    case DELETE_CHAT: {
-      return {
-        ...state,
-        chatList: [...shortenedChatList(state.chatList, action.payload)],
       };
     }
     default:
