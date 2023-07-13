@@ -1,11 +1,11 @@
-import { clearNewMessagesLog } from "../chats/actions";
-import { ADD_MESSAGE } from "../messages/actions";
+import { SUPPLY_BLINK_LOG, clearBlinkLog } from "../chats/actions";
+// import { ADD_MESSAGE } from "../messages/actions";
 
 const newMessageIndicator = (store) => (next) => (action) => {
-  if (action.type === ADD_MESSAGE) {
+  if (action.type === SUPPLY_BLINK_LOG) {
     let timeout;
     timeout = setTimeout(() => {
-      store.dispatch(clearNewMessagesLog());
+      store.dispatch(clearBlinkLog());
     }, 3000);
   }
   return next(action);

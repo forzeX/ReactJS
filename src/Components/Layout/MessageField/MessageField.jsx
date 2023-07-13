@@ -3,7 +3,7 @@ import Message from "./Message/Message";
 import "./MessageField.css";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../../../Store/messages/actions";
+import { addMessage, getMessages } from "../../../Store/messages/actions";
 import { AUTHORS } from "../../../Utils/Constants";
 
 const MessageField = () => {
@@ -12,6 +12,10 @@ const MessageField = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getMessages(dispatch);
+  }, []);
 
   useEffect(() => {
     if (!chatId || !messages[chatId]) {
