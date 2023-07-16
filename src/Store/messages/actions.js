@@ -95,6 +95,7 @@ export const addMessage = (newMessage, chatId) => (dispatch, getState) => {
       dispatch(supplyBlinkLog(chatId));
     })
     .then((result) => {
+      console.log("Начало отправления на сервер ответа бота");
       let timeout;
       timeout = setTimeout(() => {
         dispatch(messagesDataRequest());

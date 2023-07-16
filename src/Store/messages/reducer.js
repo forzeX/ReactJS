@@ -6,6 +6,7 @@ import {
   DELETE_MESSAGE,
 } from "./actions";
 import { AUTHORS, REQUEST_STATUS } from "../../Utils/Constants";
+import { TOGGLE_VISIBILITY } from "../chats/actions";
 
 const initialState = {
   messagesList: {},
@@ -13,6 +14,7 @@ const initialState = {
     status: REQUEST_STATUS.IDLE,
     error: "",
   },
+  isActive: false,
 };
 
 export const messagesReducer = (state = initialState, action) => {
@@ -42,6 +44,12 @@ export const messagesReducer = (state = initialState, action) => {
           error: "",
         },
       };
+    case TOGGLE_VISIBILITY: {
+      return {
+        ...state,
+        isActive: !state.isActive,
+      };
+    }
     // case ADD_MESSAGE:
     //   return {
     //     ...state,

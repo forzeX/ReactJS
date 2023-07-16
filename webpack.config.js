@@ -1,7 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
-const nodeExternals = require("webpack-node-externals");
+// const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
@@ -21,13 +21,19 @@ const config = {
     open: true,
     host: "localhost",
     historyApiFallback: true,
-    static: {
-      directory: path.join(__dirname, "dist"),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, "dist"),
+      },
+      {
+        directory: path.join(__dirname, "/"),
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",
+      favicon: "./src/img/favicon.png",
     }),
     new MiniCssExtractPlugin(),
     new NodePolyfillPlugin(),

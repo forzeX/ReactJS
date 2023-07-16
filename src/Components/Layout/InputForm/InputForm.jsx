@@ -5,11 +5,13 @@ import SendButton from "./SendButton/SendButton";
 import InputField from "./InputField/InputField";
 import { AUTHORS } from "../../../Utils/Constants";
 import "./InputForm.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../../../Store/messages/actions";
+import { useMediaQuery } from "react-responsive";
 
 const InputBlock = () => {
   const { chatId } = useParams();
+  console.log(chatId);
 
   const dispatch = useDispatch();
 
@@ -23,6 +25,7 @@ const InputBlock = () => {
   const [text, setText] = useState("");
 
   const handleSubmit = (event) => {
+    console.log(chatId);
     event.preventDefault();
     handleAddMessage({
       author: AUTHORS.HUMAN,
@@ -32,14 +35,21 @@ const InputBlock = () => {
     setText("");
   };
 
-  return (
-    <>
-      <form className="input-form" onSubmit={handleSubmit}>
-        <InputField text={text} setText={setText} />
-        <SendButton />
-      </form>
-    </>
-  );
+  const isActive = useSelector((state) => state.messages.isActive);
+  const isMobile = useMediaQuery({ query: "(max-width: 1079px)" });
+
+  if (isMobile & !isActive) {
+    return;
+  } else {
+    return (
+      <>
+        <form className="input-form" onSubmit={handleSubmit}>
+          <InputField text={text} setText={setText} />
+          <SendButton />
+        </form>
+      </>
+    );
+  }
 };
 
 export default InputBlock;

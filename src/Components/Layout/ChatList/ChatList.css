@@ -5,3 +5,7 @@
   background-color: white;
   border-right: 1px solid #e2e2e2;
 }
+
+.active {
+  grid-area: active;
+}

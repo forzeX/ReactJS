@@ -7,7 +7,7 @@ import InputForm from "./InputForm/InputForm";
 import { AUTHORS } from "../../Utils/Constants";
 import "./Layout.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_MESSAGE, addMessage } from "../../Store/actions";
+import { useMediaQuery } from "react-responsive";
 
 const Layout = () => {
   // const store = useSelector((state) => state.chatsStorage);
@@ -37,8 +37,19 @@ const Layout = () => {
   //   }
   // }, [messages[chatId]?.storage]);
 
+  const isMobile = useMediaQuery({ query: "(max-width: 1079px)" });
+  const activatedChat = useSelector((state) => state.chats.isActive);
+  const activatedMessages = useSelector((state) => state.messages.isActive);
+  const hasActiveComponent = () => {
+    if (activatedChat) {
+      return ` chats-active`;
+    } else {
+      return ` messages-active`;
+    }
+  };
+
   return (
-    <div className="layout">
+    <div className={`layout` + (isMobile ? `${hasActiveComponent()}` : ``)}>
       <ChatList />
       <Outlet />
     </div>

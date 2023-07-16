@@ -10,7 +10,8 @@ export const DATA_SUCCESS = "CHATS::DATA_SUCCESS";
 export const DATA_ERROR = "CHATS::DATA_ERROR";
 export const SHOW_ADD_CHAT_BAR = "CHATS::SHOW_ADD_CHAT_BAR";
 export const SUPPLY_BLINK_LOG = "CHATS::SUPPLY_BLINK_LOG";
-export const CLEAR_BLINK_LOG = "CHATS:CLEAR_BLINK_LOG";
+export const CLEAR_BLINK_LOG = "CHATS::CLEAR_BLINK_LOG";
+export const TOGGLE_VISIBILITY = "CHATS::TOGGLE_VISIBILITY";
 
 export const chatsDataRequest = () => ({
   type: DATA_REQUEST,
@@ -116,4 +117,8 @@ export const supplyBlinkLog = (chatId) => ({
 
 export const clearBlinkLog = () => ({
   type: CLEAR_BLINK_LOG,
+});
+
+export const toggleVisibility = () => ({
+  type: TOGGLE_VISIBILITY,
 });

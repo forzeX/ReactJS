@@ -8,6 +8,7 @@ import {
   DELETE_CHAT,
   SHOW_ADD_CHAT_BAR,
   SUPPLY_BLINK_LOG,
+  TOGGLE_VISIBILITY,
 } from "./actions";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   },
   showModal: false,
   haveNewMessages: [],
+  isActive: true,
 };
 
 const shortenedChatList = (chatList, chatId) => {
@@ -72,6 +74,12 @@ export const chatReducer = (state = initialState, action) => {
       return {
         ...state,
         haveNewMessages: [],
+      };
+    }
+    case TOGGLE_VISIBILITY: {
+      return {
+        ...state,
+        isActive: !state.isActive,
       };
     }
     default:

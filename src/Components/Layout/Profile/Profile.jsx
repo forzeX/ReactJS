@@ -21,9 +21,8 @@ import { REQUEST_STATUS } from "../../../Utils/Constants";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const profileData = useSelector((state) => state.profile.profileData);
-
   useEffect(() => getProfileData(dispatch), []);
+  const profileData = useSelector((state) => state.profile.profileData);
   console.log("redux profileData state: ", profileData);
 
   const [values, setValues] = useState(profileData);

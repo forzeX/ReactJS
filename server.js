@@ -85,6 +85,7 @@ app.get("/messages", (request, response) => {
 
 app.post("/messages_add", (request, response) => {
   const chatId = request.body.chatId;
+  console.log(chatId);
   const message = request.body.message;
 
   readFile("./data/messages.json")

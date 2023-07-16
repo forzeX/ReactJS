@@ -7,3 +7,16 @@
   grid-template-rows: 1fr auto;
   height: 90vh;
 }
+
+@media screen and (max-width: 1079px) {
+  .layout.messages-active {
+    grid-template-areas:
+      "message-list message-list"
+      "input input";
+  }
+  .layout.chats-active {
+    grid-template-areas:
+      "chat-list chat-list"
+      "chat-list chat-list";
+  }
+}

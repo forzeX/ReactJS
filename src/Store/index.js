@@ -6,9 +6,7 @@ import {
   compose,
 } from "@reduxjs/toolkit";
 import { chatReducer } from "./chats/reducer";
-import { ADD_CHAT } from "./chats/actions";
 import { messagesReducer } from "./messages/reducer";
-import { ADD_MESSAGE } from "./messages/actions";
 import { profileReducer } from "./profile/reducer";
 import { CHANGE_PROFILE } from "./profile/actions";
 // Логгер для отслеживания отправленных action'ов и измененного ими state'а
