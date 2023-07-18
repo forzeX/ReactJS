@@ -50,43 +50,6 @@ export const messagesReducer = (state = initialState, action) => {
         isActive: !state.isActive,
       };
     }
-    // case ADD_MESSAGE:
-    //   return {
-    //     ...state,
-    //     messagesList: {
-    //       ...state.messagesList,
-    //       [action.payload.chatId]: [
-    //         ...state.messagesList[action.payload.chatId],
-    //         action.payload.message,
-    //       ],
-    //     },
-    //   };
-    // case DELETE_CHAT:
-    //   const messagesList = { ...state.messagesList };
-    //   delete messagesList[action.payload];
-    //   return {
-    //     messagesList,
-    //   };
-    // case ADD_CHAT:
-    //   return {
-    //     ...state,
-    //     messagesList: {
-    //       ...state.messagesList,
-    //       [action.payload.id]: [],
-    //     },
-    //   };
-    // case DELETE_MESSAGE:
-    //   return {
-    //     ...state,
-    //     messagesList: {
-    //       ...state.messagesList,
-    //       [action.payload.chatId]: [
-    //         ...state.messagesList[action.payload.chatId].filter(
-    //           (message) => message.id !== action.payload.messageId
-    //         ),
-    //       ],
-    //     },
-    //   };
     default:
       return state;
   }

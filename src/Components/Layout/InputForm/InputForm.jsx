@@ -11,7 +11,6 @@ import { useMediaQuery } from "react-responsive";
 
 const InputBlock = () => {
   const { chatId } = useParams();
-  console.log(chatId);
 
   const dispatch = useDispatch();
 

@@ -21,12 +21,20 @@ const config = {
     open: true,
     host: "localhost",
     historyApiFallback: true,
+    client: {
+      progress: true,
+    },
     static: [
       {
         directory: path.join(__dirname, "dist"),
       },
       {
-        directory: path.join(__dirname, "/"),
+        directory: path.join(__dirname, "/sw"),
+        publicPath: "/sw",
+      },
+      {
+        directory: path.join(__dirname, "/src/img"),
+        publicPath: "/img",
       },
     ],
   },

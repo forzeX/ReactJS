@@ -22,7 +22,6 @@ export const profileDataError = (error) => ({
 export const getProfileData = (dispatch) => {
   dispatch(profileDataRequest());
   fetch(API_URL.PROFILE, {
-    // fetch("http://localhost:3000/profile", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +35,6 @@ export const getProfileData = (dispatch) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       dispatch(profileDataSuccess(data));
     })
     .catch((error) => {
@@ -67,23 +65,3 @@ export const changeProfileData = (dispatch, data) => {
       console.log(error);
     });
 };
-
-// export const changeName = (name) => ({
-//   type: CHANGE_NAME,
-//   payload: name,
-// });
-
-// export const changeLastName = (lastName) => ({
-//   type: CHANGE_LAST_NAME,
-//   payload: lastName,
-// });
-
-// export const changePhone = (phone) => ({
-//   type: CHANGE_PHONE,
-//   payload: phone,
-// });
-
-// export const changeBirthDate = (birthDate) => ({
-//   type: CHANGE_BIRTH_DATE,
-//   payload: birthDate,
-// });

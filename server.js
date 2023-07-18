@@ -12,6 +12,18 @@ app.use(express.static("./data"));
 app.use(bodyParser.json());
 app.use(cors());
 
+// app.all("/", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "localhost:8080");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
+var corsOptions = {
+  origin: "http://localhost:8080",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
+};
+
 const readFile = async (path) => {
   return fs
     .readFile(path, "utf-8", (error, data) => {
@@ -20,11 +32,12 @@ const readFile = async (path) => {
     .then((data) => {
       // console.log(data);
       // console.log("parsed data: ", JSON.parse(data));
+      console.log(data);
       return JSON.parse(data);
     });
 };
 
-// wData - writeable data, rData - data to response
+// wData - writeable data
 const writeFile = async (
   path,
   wData,
@@ -35,12 +48,7 @@ const writeFile = async (
     .writeFile(path, wData, (error) => {
       response.send(error);
     })
-    .then((res) =>
-      response.send(
-        // rData
-        wData
-      )
-    );
+    .then((res) => response.send(wData));
 };
 
 // fs.writeFile("./data/messages.json", JSON.stringify(data, null, 2), (error) => {
@@ -53,7 +61,6 @@ const writeFile = async (
 // Profile
 app.get("/profile", (request, response) => {
   readFile("./data/profile.json").then((data) => {
-    console.log(data);
     response.send(JSON.stringify(data));
   });
 });
@@ -61,16 +68,11 @@ app.get("/profile", (request, response) => {
 // Переделать. Сейчас в ответ отправляются неизмененные данные из request'a
 app.post("/profile", (request, response) => {
   const profileData = request.body;
-  console.log("following profileData was accepted", profileData);
-
-  // readFile("./data/profile.json").then((data) => {});
 
   writeFile(
     "./data/profile.json",
     JSON.stringify(profileData, null, 2),
     response
-    // ,
-    // JSON.stringify(profileData, null, 2)
   );
 });
 
@@ -160,18 +162,9 @@ app.post("/chats_add", (request, response) => {
   // В теле запроса передается объект с двумя свойствами - name и id. Пример: {"name": "Чат 1", "id": "9efd8d44-18a2-11ee-be56-0242ac120002"}
   console.log("request body: ", request.body);
   const chatId = request.body.id;
-  // const newChat = JSON.stringify({
-  //   [request.body.id]: [],
-  // });
-  // fs.readFile("./data/chats.json", "utf-8", (error, data) => {
-  //   if (error) {
-  //     request.send(error);
-  //   }
-  // })
-  //   .then((data) => JSON.parse(data))
+
   readFile("./data/chats.json")
     .then((chatsRoot) => {
-      console.log("chatsRoot: ", chatsRoot, "request.body: ", request.body);
       chatsRoot.chatList.push(request.body);
       return chatsRoot;
     })
@@ -184,7 +177,6 @@ app.post("/chats_add", (request, response) => {
     );
 
   readFile("./data/messages.json").then((chatList) => {
-    console.log(chatList);
     const newChatList = JSON.stringify(
       { ...chatList, [request.body.id]: [] },
       null,
@@ -211,16 +203,9 @@ app.post("/chats_add", (request, response) => {
 
 app.post("/chats_delete", (request, response) => {
   const chatId = request.body.id; // Сейчас в теле запроса передается объект со свойством id. Пример: {id: "..."}
-  console.log(chatId);
 
   readFile("./data/chats.json")
     .then((chatsRoot) => {
-      console.log(
-        "chatsRoot: ",
-        chatsRoot,
-        "request.body.id: ",
-        request.body.id
-      );
       chatsRoot.chatList = chatsRoot.chatList.filter(
         (item) => item.id != chatId
       );
@@ -231,17 +216,12 @@ app.post("/chats_delete", (request, response) => {
         "./data/chats.json",
         JSON.stringify({ ...data }, null, 2),
         response
-        // ,
-        // JSON.stringify({ ...data }, null, 2)
       )
     );
 
   readFile("./data/messages.json").then((chatList) => {
-    console.log("chat id = ", chatId, "chat list =", chatList);
     delete chatList[chatId];
-    console.log("updated chat list =", chatList);
     const newChatList = JSON.stringify(chatList, null, 2);
-    console.log(newChatList);
     fs.writeFile("./data/messages.json", newChatList, (error) => {
       if (error) {
         response.send(error);
@@ -249,6 +229,81 @@ app.post("/chats_delete", (request, response) => {
     });
   });
 });
+
+// App installs
+
+app.post("/app_install", cors(corsOptions), (request, response) => {
+  readFile("./data/appInstalls.json").then((data) => {
+    writeFile(
+      "./data/appInstalls.json",
+      JSON.stringify(
+        {
+          ...data,
+          installs: [
+            ...data.installs,
+            { id: Date.now().toString(), info: request.headers },
+          ],
+        },
+        null,
+        2
+      ),
+      response
+    );
+  });
+});
+
+// Subscription
+
+app.post("/save-subscription", (req, res) => {
+  // if (!isValidSaveRequest(req, res)) {
+  //   return;
+  // }
+
+  return saveSubscriptionToDatabase(req.body, res)
+    .then((subscriptionId) => {
+      console.log(subscriptionId);
+      // res.setHeader("Content-Type", "application/json");
+      // res.status(200);
+      res.send(JSON.stringify({ data: { success: true } }));
+    })
+    .catch(function (err) {
+      res.status(500);
+      res.setHeader("Content-Type", "application/json");
+      res.send(
+        JSON.stringify({
+          error: {
+            id: "unable-to-save-subscription",
+            message:
+              "The subscription was received but we were unable to save it to our database.",
+          },
+        })
+      );
+    });
+});
+
+// Subscription. Добавленных данных подписки в БД
+
+const saveSubscriptionToDatabase = async (requestBody, response) => {
+  const id = Date.now().toString();
+  console.log("Записываю данные подписки в БД");
+  readFile("./data/subscriptions.json").then((data) => {
+    const subscriptionData = JSON.stringify(
+      {
+        ...data,
+        subscriptions: [...data.subscriptions, { id, info: requestBody }],
+      },
+      null,
+      2
+    );
+    fs.writeFile("./data/subscriptions.json", subscriptionData, (error) => {
+      if (error) {
+        response.send(error);
+      }
+    });
+    return id;
+  });
+  return id;
+};
 
 // Start the server
 app.listen(PORT, (error) => {

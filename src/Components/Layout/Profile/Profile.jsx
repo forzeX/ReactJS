@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
-// import { sendProfileName } from "../../../Store/actions";
 import {
   getProfileData,
   changeProfileData,
@@ -17,16 +16,30 @@ import {
   InputAdornment,
   Box,
 } from "@mui/material";
-import { REQUEST_STATUS } from "../../../Utils/Constants";
+import { API_URL, REQUEST_STATUS } from "../../../Utils/Constants";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  useEffect(() => getProfileData(dispatch), []);
+  useEffect(() => {
+    getProfileData(dispatch);
+  }, []);
+
   const profileData = useSelector((state) => state.profile.profileData);
-  console.log("redux profileData state: ", profileData);
 
   const [values, setValues] = useState(profileData);
-  console.log("values: ", values);
+
+  useEffect(() => {
+    fetch(API_URL.PROFILE, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((profileData) => setValues(profileData))
+      .catch((error) => console.error(error));
+  }, []);
+
   const error = useSelector((state) => state.profile.requestStatus.error);
   const status = useSelector((state) => state.profile.requestStatus.status);
 
@@ -40,54 +53,13 @@ const Profile = () => {
 
   const keys = Object.keys(profileData);
 
-  // const determineDescription = (name) => {
-  //   switch (name) {
-  //     case "login":
-  //       return "Логин";
-  //     case "name":
-  //       return "Имя";
-  //     case "lastName":
-  //       return "Фамилия";
-  //     case "phone":
-  //       return "Номер телефона";
-  //     case "birthDate":
-  //       return "Дата рождения";
-  //     default:
-  //       return "";
-  //   }
-  // };
-  // description, value, name
-  // defaultValue={profileData[name]}
-
-  // <...>
-  // {}
-  // <.../>
-  //
-  //   <FormControl variant="standard">
-  //   <InputLabel htmlFor="input-with-icon-adornment">{description}</InputLabel>
-  //   <Input
-  //     id="input-with-icon-adornment"
-  //     defaultValue={value}
-  //     startAdornment={
-  //       <InputAdornment position="start">
-  //         <AlternateEmailIcon />
-  //       </InputAdornment>
-  //     }
-  //     onBlur={handleBlur} //+
-  //     name={name}
-  //     onChange={handleChange}
-  //   />
-  // </FormControl>
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-    console.log(values);
   };
 
   const handleBlur = (e) => {
     changeProfileData(dispatch, values);
-    console.log(values);
   };
 
   return (

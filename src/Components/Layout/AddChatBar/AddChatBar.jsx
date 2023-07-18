@@ -55,7 +55,7 @@ const AddChatBar = () => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} onSubmit={handleCreate}>
       <DialogTitle>Новый чат</DialogTitle>
       <DialogContent>
         <DialogContentText>Введите название нового чата</DialogContentText>

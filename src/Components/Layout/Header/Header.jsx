@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import SendIcon from "@mui/icons-material/Send";
 import HeaderNavigation from "./HeaderNavigation/HeaderNavigation";
 import "./Header.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import PushToggle from "./PushToggle/PushToggle";
+import { getProfileData } from "../../../Store/profile/actions";
 
 const Header = () => {
   const profileLogin = useSelector((store) => store.profile.profileData.login);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getProfileData(dispatch);
+  }, []);
+
   return (
     <>
       <div className="header">
-        <h1>
+        <PushToggle />
+        <h1 style={{ gridArea: "logo" }}>
           <SendIcon variant="outlined" sx={{ mr: 1 }} />
           Messenger
         </h1>

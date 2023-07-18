@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./InputField.css";
 import TextField from "@mui/material/TextField";
 import { red } from "@mui/material/colors";
-import { useSelector } from "react-redux";
-import { useMediaQuery } from "react-responsive";
 
 const InputField = ({ text, setText }) => {
   const handleChange = (event) => {

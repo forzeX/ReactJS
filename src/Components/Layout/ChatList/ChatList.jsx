@@ -29,69 +29,44 @@ const ChatList = () => {
     dispatch(showAddChatBar());
   };
 
-  // const [view, setView] = useState("minimized");
-  // const handleClick = () => {
-  //   if (view == "minimized") {
-  //     setView("maximized");
-  //   } else {
-  //     setView("minimized");
-  //   }
-  // };
-
   const isMobile = useMediaQuery({ query: "(max-width: 1079px)" });
   const isActive = useSelector((state) => state.chats.isActive);
-
-  // console.log("isMobile = ", isMobile, "isActive = ", isActive);
-  // if (isMobile & !isActive) {
-  //   console.log("Условие выполнено!");
-  // }
 
   const handleClick = () => {
     dispatch(toggleVisibility());
   };
 
-  // if (isMobile & !isActive) {
-  //   return (
-  //     <>
-  //       <Fab
-  //         sx={[
-  //           { position: "absolute" },
-  //           { left: "5px" },
-  //           { top: "calc(10vh + 5px)" },
-  //         ]}
-  //         color="primary"
-  //         aria-label="add"
-  //         onClick={handleClick}
-  //       >
-  //         <FormatListBulletedIcon />
-  //       </Fab>
-  //     </>
-  //   );
-  // } else {
-  //   return (
-  //     <List className="chat-list">
-  //       {chats.map((chat) => (
-  //         <ChatListItem key={chat.id} text={chat.name} id={chat.id} />
-  //       ))}
-  //       <Button onClick={handleAddChat} startIcon={<AddCircleIcon />}>
-  //         Создать новый чат
-  //       </Button>
-  //       {showModal && <AddChatBar />}
-  //     </List>
-  //   );
-  // }
-
-  return (
-    <List className="chat-list">
-      {chats.map((chat) => (
-        <ChatListItem key={chat.id} text={chat.name} id={chat.id} />
-      ))}
-      <Button onClick={handleAddChat} startIcon={<AddCircleIcon />}>
-        Создать новый чат
-      </Button>
-      {showModal && <AddChatBar />}
-    </List>
-  );
+  if (isMobile & !isActive) {
+    return (
+      <>
+        <Fab
+          sx={[
+            { position: "absolute" },
+            { left: "5px" },
+            { top: "calc(10vh + 5px)" },
+          ]}
+          color="primary"
+          aria-label="add"
+          onClick={handleClick}
+          size="medium"
+        >
+          <FormatListBulletedIcon />
+        </Fab>
+      </>
+    );
+  } else {
+    return (
+      <List className="chat-list">
+        {chats.map((chat) => (
+          <ChatListItem key={chat.id} text={chat.name} id={chat.id} />
+        ))}
+        <Button onClick={handleAddChat} startIcon={<AddCircleIcon />}>
+          Создать новый чат
+        </Button>
+        {showModal && <AddChatBar />}
+      </List>
+    );
+  }
 };
 
 export default ChatList;

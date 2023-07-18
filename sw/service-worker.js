@@ -24,7 +24,7 @@ self.addEventListener("install", function (event) {
     event.waitUntil(
       caches.open(CACHE_NAME).then(function (cache) {
         // Получаем данные из манифеста (они кэшируются)
-        fetch("manifest/manifest.json")
+        fetch("manifest.json")
           .then((response) => {
             response.json();
           })
@@ -47,4 +47,15 @@ self.addEventListener("fetch", function (event) {
       })
     );
   }
+});
+
+self.addEventListener("push", function (event) {
+  console.info("Event: Push");
+  var title = "Получено новое сообщение!";
+  var body = {
+    body: "Нажмите сюда, чтобы ознакомиться с сообщением",
+    tag: "pwa",
+    icon: "sw/manifest/logo-pwa-48.png",
+  };
+  event.waitUntil(self.registration.showNotification(title, body));
 });

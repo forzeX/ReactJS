@@ -44,7 +44,6 @@ export const getChatsData = (dispatch) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       dispatch(chatsDataSuccess(data));
     })
     .catch((error) => {
@@ -70,7 +69,6 @@ export const addChat = (newChat) => (dispatch, getState) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       dispatch(chatsDataSuccess(data));
     })
     .catch((error) => {
@@ -97,7 +95,6 @@ export const deleteChat = (id) => (dispatch, getState) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       dispatch(chatsDataSuccess(data));
     })
     .catch((error) => {
