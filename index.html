@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="theme-color" content="#1976d2" />
     <title>React App</title>
+    <link rel="manifest" href="http://localhost:8080/sw/manifest.json" />
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(
+              function (registration) {
+                // Registration was successful
+                console.log(
+                  "ServiceWorker успешно зарегистрирован со сферой действия: ",
+                  registration.scope
+                );
+              },
+              function (err) {
+                // registration failed :(
+                console.log("ServiceWorker не удалось зарегистрировать: ", err);
+              }
+            )
+            .catch(function (err) {
+              console.log(err);
+            });
+        });
+      } else {
+        console.log("ServiceWorker не поддерживается");
+      }
+    </script>
+    <script>
+      window.addEventListener("appinstalled", (evt) => {
+        fetch("http://localhost:3000/app_install", {
+          method: "POST",
+          credentials: "include",
+        }).then((response) => console.log(response.json()));
+      });
+    </script>
+    <script src="/sw/notifications.js"></script>
   </body>
 </html>

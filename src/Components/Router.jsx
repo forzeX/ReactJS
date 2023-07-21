@@ -12,6 +12,7 @@ import MessageField from "./Layout/MessageField/MessageField";
 import InputForm from "./Layout/InputForm/InputForm";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import Header from "./Layout/Header/Header";
+import InstallPopup from "./InstallPopup/InstallPopup";
 
 const Router = createBrowserRouter([
   {
@@ -20,7 +21,12 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Layout />,
+        element: (
+          <>
+            <Layout />
+            <InstallPopup />
+          </>
+        ),
         children: [
           {
             path: "/chats/:chatId?",
@@ -39,7 +45,6 @@ const Router = createBrowserRouter([
       },
       {
         path: "*",
-        // element: <div>Ошибка 404. Такой страницы не существует</div>,
         element: <ErrorPage />,
       },
     ],

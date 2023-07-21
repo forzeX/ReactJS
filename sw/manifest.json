@@ -1,0 +1,60 @@
+{
+  "short-name": "Messenger",
+  "name": "Simple Messenger",
+  "icons": [
+    {
+      "src": "/sw/logo-pwa/16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sw/logo-pwa/512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1976d2",
+  "theme_color": "#1976d2",
+  "orientation": "any",
+  "display": "standalone",
+  "gcm_sender_id": "1234567890"
+}

@@ -15,7 +15,7 @@ const SendButton = () => {
       color="primary"
       type="submit"
     >
-      <SendIcon />
+      <SendIcon fontSize="small" />
     </Fab>
   );
 };
